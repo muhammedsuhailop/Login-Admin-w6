@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const connectDB = require('./config/database');
 const authRoutes = require('./routes/auth-route');
 const userRoutes = require('./routes/user-route');
-
+const adminRoutes = require('./routes/admin-route');
 
 const app = express();
 const PORT = process.env.PORT || 3004;
@@ -45,9 +45,27 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use((req, res, next) => {
+    res.renderWithAdminLayout = (page, options = {}) => {
+        res.render(page, options, (err, html) => {
+            if (err) return next(err);
+            options.body = html;
+            res.render('layout/AdminMain', options);
+        });
+    };
+    next();
+});
+
+
 // Routes
 app.use('/', authRoutes);
 app.use('/user', userRoutes);
+app.use('/admin', adminRoutes); 
+
+app.get('*',(req,res)=>{
+    res.status(404);
+    res.send("Page not found");
+})
 
 // Database Connection and Server Start
 connectDB()
