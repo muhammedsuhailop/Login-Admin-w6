@@ -8,7 +8,9 @@ router.get('/', (req, res) => {
     if (req.session.loggedIn) {
         return res.redirect('/user/home');
     }
-    res.render('pages/login');
+    const flashMessage = req.session.flash || {};
+    delete req.session.flash;
+    res.render('pages/login', { flash: flashMessage });
 });
 
 // Handle Login
@@ -63,6 +65,7 @@ router.post('/signup', async (req, res) => {
         data.password = hashedPassword;
         delete data.repeatPassword;
         await User.create(data);
+        req.session.flash = { success: 'Signup successful!' };
         res.redirect('/');
     } catch (err) {
         console.error('Error during user signup:', err);

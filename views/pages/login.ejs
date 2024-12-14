@@ -18,6 +18,13 @@
         <p class="text-center">Login with your account</p>
 
         <form action="/login" method="POST" onsubmit="return validateForm()">
+          <% if (flash.success) { %>
+          <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
+            <span><%= flash.success %></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <% } %>
+
           <% if (typeof error !== 'undefined') { %>
           <p class="text-danger text-center">
             <%= error %>
@@ -27,10 +34,10 @@
             <label for="usernameF" class="form-label">Username</label>
             <div class="input-group">
               <span class="input-group-text"><i class="fa fa-user"></i></span>
-              <input type="text" id="usernameF" class="form-control" placeholder="Enter your Email" name="email" oninput="clearErr('usernameErrorMsg')"  />
+              <input type="text" id="usernameF" class="form-control" placeholder="Enter your Email" name="email" oninput="clearErr('usernameErrorMsg')" />
             </div>
             <span id="usernameErrorMsg" class="text-danger"></span>
-            
+
           </div>
 
           <div class="mb-3">
@@ -47,7 +54,7 @@
           </div>
           <p class="divider-text text-center my-3">
             <!-- <span>OR</span> -->
-             <hr>
+            <hr>
           </p>
           <div class="d-grid mb-3">
             <a href="#" class="btn btn-info w-100 mb-2"><i class="fab fa-twitter"></i> Login via Twitter</a>
@@ -57,7 +64,7 @@
           <div class="d-flex justify-content-center">
             <p class="text-center"></p> <a href="/admin/login">Admin Login</a></p>
           </div>
-          
+
         </form>
       </div>
     </div>
@@ -87,8 +94,7 @@
 
     function clearErr(id) {
       document.getElementById(id).textContent = '';
-    }
-    
+    };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

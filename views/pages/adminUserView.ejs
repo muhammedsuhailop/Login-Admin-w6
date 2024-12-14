@@ -1,0 +1,51 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb mt-2">
+    <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
+    <li class="breadcrumb-item active">View User</li>
+  </ol>
+</nav>
+
+<div class="container mt-5 d-flex flex-column">
+  <h2 class="mb-4">View User Information</h2>
+  <div class="table-responsive align-self-center" style="width: 80%;">
+    <table class="table">
+      <tbody>
+        <tr>
+          <th class="col-3" scope="row">ID</th>
+          <td class="col-9"><%= user._id %></td>
+        </tr>
+        <tr>
+          <th scope="row">Email</th>
+          <td><%= user.email %></td>
+        </tr>
+        <tr>
+          <th scope="row">First Name</th>
+          <td><%= user.firstName %></td>
+        </tr>
+        <tr>
+          <th scope="row">Last Name</th>
+          <td><%= user.lastName %></td>
+        </tr>
+        <tr>
+          <th scope="row">Country</th>
+          <td><%= user.country %></td>
+        </tr>
+        <tr>
+          <th scope="row">State / Province</th>
+          <td><%= user.stateProvince %></td>
+        </tr>
+        <tr>
+          <th scope="row">PIN</th>
+          <td><%= user.pin %></td>
+        </tr>
+        <tr>
+          <th scope="row">Phone Number</th>
+          <td>
+            <%= user.phoneCode ? '( ' + user.phoneCode + ' ) ' : '' %>
+            <%= user.phoneNumber || 'N/A' %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

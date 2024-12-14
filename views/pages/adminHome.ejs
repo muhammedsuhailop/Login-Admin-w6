@@ -1,1 +1,55 @@
 <h1>Welcome admin</h1>
+<% if (flash.success) { %>
+<div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
+  <span><%= flash.success %></span>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<% } %>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2 class="mb-0">User Data</h2>
+  <a href="/admin/adduser" class="btn btn-primary"><i class="bi bi-plus-square-fill mx-2"></i>Create New User</a>
+</div>
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">Email</th>
+        <th class="text-center">Full Name</th>
+        <th class="text-center">Phone</th>
+        <th class="text-center col-2">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <% usersData.forEach((element,index) => { %>
+      <tr>
+        <td class="text-left"><%= index+1  %> </td>
+        <td class="text-left"><%= element.email %></td>
+        <td class="text-left"><%= element.firstName +' '+element.lastName %></td>
+        <td class="text-left"><%= element.phoneNumber %></td>
+        <td class="text-center">
+          <div class="d-flex flex-row justify-content-around gap-2 mx-md-2">
+
+            <a href="/admin/viewuser/<%= element._id %>" type="button" class="btn btn-primary btn-small">
+              <i class="bi bi-eye-fill"></i>
+            </a>
+
+            <a href="/admin/edit-user/<%= element._id %>" type="button" class="btn btn-warning btn-small">
+              <i class="bi bi-pencil-square"></i>
+            </a>
+
+            <form action="/edit/<%= element._id %>?_method=DELETE" method="POST" class="position-relative">
+              <button type="submit" class="btn btn-danger btn-small">
+                <i class="bi bi-trash3-fill"></i>
+              </button>
+            </form>
+
+          </div>
+        </td>
+        <% }) %>
+      </tr>
+
+    </tbody>
+  </table>
+</div>

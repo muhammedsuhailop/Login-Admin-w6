@@ -15,7 +15,7 @@
       <div class="card-body">
         <h4 class="card-title mt-3 text-center">Admin Signup</h4>
         <p class="text-center">Create an admin account</p>
-        
+
         <form action="/admin/signup" method="POST">
           <div class="mb-3">
             <label for="name" class="form-label">Full Name</label>
@@ -51,17 +51,17 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    document.getElementById('signupButton').addEventListener('click', function (e) {
-        const password = document.getElementById('password').value;
-        const repeatPassword = document.getElementById('repeatPassword').value;
-        const errorMessage = document.getElementById('errorMessage');
+    document.getElementById('signupButton').addEventListener('click', function(e) {
+      const password = document.getElementById('password').value;
+      const repeatPassword = document.getElementById('repeatPassword').value;
+      const errorMessage = document.getElementById('errorMessage');
 
-        if (password !== repeatPassword) {
-            e.preventDefault(); 
-            errorMessage.style.display = 'block'; 
-        } else {
-            errorMessage.style.display = 'none'; 
-        }
+      if (password !== repeatPassword) {
+        e.preventDefault();
+        errorMessage.style.display = 'block';
+      } else {
+        errorMessage.style.display = 'none';
+      }
     });
   </script>
 </body>

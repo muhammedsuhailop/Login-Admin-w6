@@ -3,6 +3,7 @@ const path = require('path');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const connectDB = require('./config/database');
+const methodOverride = require('method-override');
 const authRoutes = require('./routes/auth-route');
 const userRoutes = require('./routes/user-route');
 const adminRoutes = require('./routes/admin-route');
@@ -16,6 +17,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 app.use(
     session({
         secret: 'encrypitit',
@@ -60,9 +62,9 @@ app.use((req, res, next) => {
 // Routes
 app.use('/', authRoutes);
 app.use('/user', userRoutes);
-app.use('/admin', adminRoutes); 
+app.use('/admin', adminRoutes);
 
-app.get('*',(req,res)=>{
+app.get('*', (req, res) => {
     res.status(404);
     res.send("Page not found");
 })
