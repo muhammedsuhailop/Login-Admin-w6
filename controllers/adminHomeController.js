@@ -80,6 +80,9 @@ exports.getAdminHome = async (req, res) => {
 
 //admin Use View GET
 exports.getUserView = async (req, res) => {
+    if (!req.session.adminLoggedIn) {
+        return res.redirect('/admin/login');
+    }
     try {
         const user = await User.findOne({ _id: req.params.id });
         res.renderWithAdminLayout('pages/adminUserView', { user });
@@ -90,6 +93,9 @@ exports.getUserView = async (req, res) => {
 
 //admin User Edit GET
 exports.getEditUser = async (req, res) => {
+    if (!req.session.adminLoggedIn) {
+        return res.redirect('/admin/login');
+    }
     try {
         const user = await User.findOne({ _id: req.params.id });
         res.renderWithAdminLayout('pages/adminUserEdit', { user });
@@ -100,6 +106,9 @@ exports.getEditUser = async (req, res) => {
 
 //admin User Edit PUT
 exports.putEditUser = async (req, res) => {
+    if (!req.session.adminLoggedIn) {
+        return res.redirect('/admin/login');
+    }
     try {
         const userId = req.params.id;
         const newData = req.body;
@@ -110,5 +119,21 @@ exports.putEditUser = async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).send('Error updating user data');
+    }
+}
+
+//admin User Delete DELETE
+exports.deleteUser = async (req,res)=>{
+    if (!req.session.adminLoggedIn) {
+        return res.redirect('/admin/login');
+    }
+    try{
+        const userID= req.params.id;
+        await User.findByIdAndDelete(userID);
+        req.session.flash = {success:'User deleted successfully'};
+        res.redirect('/admin/home');
+    }catch(err){
+        console.error(err);
+        res.status(500).send('Error deleting user');
     }
 }

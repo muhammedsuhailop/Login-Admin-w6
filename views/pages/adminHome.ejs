@@ -39,8 +39,8 @@
               <i class="bi bi-pencil-square"></i>
             </a>
 
-            <form action="/edit/<%= element._id %>?_method=DELETE" method="POST" class="position-relative">
-              <button type="submit" class="btn btn-danger btn-small">
+            <form action="/admin/delete-user/<%= element._id %>?_method=DELETE" method="POST" class="position-relative">
+              <button type="submit" class="btn btn-danger btn-small" onclick="return confirm(`Are you sure deleting this user?` )">
                 <i class="bi bi-trash3-fill"></i>
               </button>
             </form>

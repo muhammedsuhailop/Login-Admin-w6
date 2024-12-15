@@ -97,3 +97,24 @@ body {
     border-color: transparent;
     box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
+
+/* Rounded Search Input */
+input[type="search"] {
+    height: 35px;
+    font-size: 0.9rem;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  input[type="search"]:focus {
+    background-color: #444;
+    border-color: #666;
+    outline: none;
+    box-shadow: none;
+  }
+  
+  /* Logout Button */
+  .btn-outline-light {
+    padding: 5px 15px;
+  }
+  

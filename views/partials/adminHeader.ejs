@@ -1,19 +1,27 @@
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="/">Admin</a>
 
-  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="/">Admin </a>
-
-  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <form class="nav col-12 col-md-auto flex-fill mb-2 justify-content-center mb-md-0" role="search" method="POST" action="/search">
-    <input type="search" name="searchTerm" class="form-control form-control-dark w-100 rounded-0 border-0" placeholder="Search..." aria-label="Search">
-  </form>
-
-  <li class="nav-item method mx-3 ">
-    <form action="/logout" method="POST">
-      <button class="btn btn-outline-secondary ml-md-3" type="submit">Log Out</button>
+  <div class="d-none d-md-flex flex-grow-1 justify-content-between px-3">
+    <form class="d-flex" role="search" method="POST" action="/search">
+      <input type="search" name="searchTerm" class="form-control rounded-pill border-0 px-3" placeholder="Search..." aria-label="Search">
     </form>
-  </li>
 
+    <form action="/logout" method="POST" class="d-flex">
+      <button class="btn btn-outline-light rounded-pill" type="submit">Log Out</button>
+    </form>
+  </div>
+
+  <div class="collapse navbar-collapse" id="navbarContent">
+    <form class="d-flex my-2" role="search" method="POST" action="/search">
+      <input type="search" name="searchFromAdmin" class="form-control rounded-pill border-0 px-3" placeholder="Search..." aria-label="Search">
+    </form>
+
+    <form action="/admin/logout" method="POST" class="d-flex justify-content-center">
+      <button class="btn btn-outline-light rounded-pill" type="submit">Log Out</button>
+    </form>
+  </div>
 </header>

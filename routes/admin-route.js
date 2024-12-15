@@ -56,5 +56,8 @@ router.get('/viewuser/:id', adminController.getUserView);
 router.get('/edit-user/:id', adminController.getEditUser);
 router.put('/edit-user/:id', adminController.putEditUser);
 
+//Admin User Delete
+router.delete('/delete-user/:id',adminController.deleteUser);
+
 
 module.exports = router;
