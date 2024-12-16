@@ -69,15 +69,15 @@
           <div class="mb-3">
             <label for="password" class="form-label">Create Password</label>
             <div class="input-group">
-              <span class="input-group-text"><i class="fa fa-lock"></i></span>
-              <input id="password" class="form-control" value="<%= user.password %>" type="password" name="password" required>
+              <span class="input-group-text"><i class="bi bi-key"></i></span>
+              <input id="password" class="form-control" value="<%= user.password %>" type="password" name="password" required disabled>
             </div>
           </div>
           <div class="mb-3">
             <label for="repeatPassword" class="form-label">Repeat Password</label>
             <div class="input-group">
-              <span class="input-group-text"><i class="fa fa-lock"></i></span>
-              <input id="repeatPassword" class="form-control" value="<%= user.password %>" type="password" name="repeatPassword" required>
+              <span class="input-group-text"><i class="bi bi-key"></i></span>
+              <input id="repeatPassword" class="form-control" value="<%= user.password %>" type="password" name="repeatPassword" required disabled>
             </div>
             <span id="errorMessage" class="text-danger" style="display: none;">Passwords do not match!</span>
           </div>

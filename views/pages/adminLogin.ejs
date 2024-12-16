@@ -15,19 +15,25 @@
     <div class="card bg-light">
       <div class="card-body mx-auto" style="max-width: 400px;">
         <h4 class="card-title text-center">Admin Login</h4>
+        <% if (flash.success && flash.success.trim()) { %>
+        <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
+          <span><%= flash.success %></span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <% } %>
         <p class="text-center">Login with your admin account</p>
-
         <form action="/admin/login" method="POST" onsubmit="return validateForm()">
-          <% if (typeof error !== 'undefined') { %>
-          <p class="text-danger text-center">
-            <%= error %>
-          </p>
+          <% if (flash.error && flash.error.trim()) { %>
+          <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
+            <span><%= flash.error %></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
           <% } %>
           <div class="mb-3">
             <label for="usernameF" class="form-label">Username</label>
             <div class="input-group">
               <span class="input-group-text"><i class="fa fa-user"></i></span>
-              <input type="text" id="usernameF" class="form-control" placeholder="Enter your admin email" name="email" oninput="clearErr('usernameErrorMsg')" />
+              <input type="text" id="usernameF" class="form-control" placeholder="Enter your admin email" name="email" oninput="clearErr('usernameErrorMsg')" autocomplete="off" />
             </div>
             <span id="usernameErrorMsg" class="text-danger"></span>
 

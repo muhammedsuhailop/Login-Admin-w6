@@ -13,12 +13,18 @@ router.get('/', (req, res) => {
     res.render('pages/login', { flash: flashMessage });
 });
 
-// Handle Login
+router.get('/login', (req, res) => {
+    if (req.session.loggedIn) {
+        return res.redirect('/user/home');
+    }
+    res.redirect('/');
+});
+
 router.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email });
         if (!user) {
-            return res.render('pages/login', { error: 'User not found' });
+            return res.redirect('/login?error=User not found');
         }
         const isPasswordMatch = await bcrypt.compare(req.body.password, user.password);
         if (isPasswordMatch) {
@@ -27,7 +33,7 @@ router.post('/login', async (req, res) => {
             req.session.firstName = user.firstName;
             return res.redirect('/user/home');
         } else {
-            return res.render('pages/login', { error: 'Incorrect password' });
+            return res.redirect('/login?error=Incorrect password');
         }
     } catch (err) {
         console.error('Error during user login:', err);
@@ -50,7 +56,9 @@ router.get('/signup', (req, res) => {
     if (req.session.loggedIn) {
         return res.redirect('/user/home');
     }
-    res.render('pages/signup');
+    const flashMessage = req.session.flash || {};
+    delete req.session.flash;
+    res.render('pages/signup', { flash: flashMessage });
 });
 
 // Handle Signup
@@ -59,7 +67,8 @@ router.post('/signup', async (req, res) => {
         const data = req.body;
         const existingUser = await User.findOne({ email: data.email });
         if (existingUser) {
-            return res.render('pages/signup', { error: 'User already registered' });
+            req.session.flash = { error: 'Given email already registered!' }
+            return res.redirect('/signup');
         }
         const hashedPassword = await bcrypt.hash(data.password, 10);
         data.password = hashedPassword;
@@ -69,6 +78,7 @@ router.post('/signup', async (req, res) => {
         res.redirect('/');
     } catch (err) {
         console.error('Error during user signup:', err);
+        req.session.flash = { error: 'Internal error on signup' }
         res.redirect('/signup');
     }
 });

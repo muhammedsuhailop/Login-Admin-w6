@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
         trim: true,
     },
     phoneNumber: {
-        type: Number,
+        type: String,
         required: false,
         trim: true,
         match: /^\d{7,15}$/,
