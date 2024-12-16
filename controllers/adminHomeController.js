@@ -74,40 +74,30 @@ exports.postSignup = async (req, res) => {
 
 //admin addUser GET
 exports.getAddUser = async (req, res) => {
-    if (req.session.adminLoggedIn) {
-        return res.renderWithAdminLayout('pages/adminNewUser');
-    }
-    res.render('pages/adminLogin', { error: null });
+    return res.renderWithAdminLayout('pages/adminNewUser');
 }
 
 //admin addUser POST
 exports.postAddUser = async (req, res) => {
-    if (req.session.adminLoggedIn) {
-        try {
-            const data = req.body;
-            const existingUser = await User.findOne({ email: data.email });
-            if (existingUser) {
-                return res.renderWithAdminLayout('pages/adminNewUser', { error: 'User already registered' });
-            }
-            const hashedPassword = await bcrypt.hash(data.password, 10);
-            data.password = hashedPassword;
-            delete data.repeatPassword;
-            await User.create(data);
-            req.session.flash = { success: 'New used added successfully' };
-            res.redirect('/admin/home');
-        } catch (err) {
-            console.log(err);
+    try {
+        const data = req.body;
+        const existingUser = await User.findOne({ email: data.email });
+        if (existingUser) {
+            return res.renderWithAdminLayout('pages/adminNewUser', { error: 'User already registered' });
         }
-    } else {
-        res.render('pages/adminLogin', { error: null });
+        const hashedPassword = await bcrypt.hash(data.password, 10);
+        data.password = hashedPassword;
+        delete data.repeatPassword;
+        await User.create(data);
+        req.session.flash = { success: 'New used added successfully' };
+        res.redirect('/admin/home');
+    } catch (err) {
+        console.log(err);
     }
 }
 
 //admin Home get
 exports.getAdminHome = async (req, res) => {
-    if (!req.session.adminLoggedIn) {
-        return res.redirect('/admin/login');
-    }
     const flashMessage = req.session.flash || {};
     delete req.session.flash;
     try {
@@ -120,9 +110,6 @@ exports.getAdminHome = async (req, res) => {
 
 //admin Use View GET
 exports.getUserView = async (req, res) => {
-    if (!req.session.adminLoggedIn) {
-        return res.redirect('/admin/login');
-    }
     try {
         const user = await User.findOne({ _id: req.params.id });
         res.renderWithAdminLayout('pages/adminUserView', { user });
@@ -133,9 +120,6 @@ exports.getUserView = async (req, res) => {
 
 //admin User Edit GET
 exports.getEditUser = async (req, res) => {
-    if (!req.session.adminLoggedIn) {
-        return res.redirect('/admin/login');
-    }
     try {
         const user = await User.findOne({ _id: req.params.id });
         res.renderWithAdminLayout('pages/adminUserEdit', { user });
@@ -146,9 +130,6 @@ exports.getEditUser = async (req, res) => {
 
 //admin User Edit PUT
 exports.putEditUser = async (req, res) => {
-    if (!req.session.adminLoggedIn) {
-        return res.redirect('/admin/login');
-    }
     try {
         const userId = req.params.id;
         const newData = req.body;
@@ -171,12 +152,13 @@ exports.putEditUser = async (req, res) => {
 
 //admin User Delete DELETE
 exports.deleteUser = async (req, res) => {
-    if (!req.session.adminLoggedIn) {
-        return res.redirect('/admin/login');
-    }
     try {
         const userID = req.params.id;
-        await User.findByIdAndDelete(userID);
+        const deleteUser = await User.findByIdAndDelete(userID);
+        if (!deleteUser) {
+            req.session.flash = { error: 'User not found' };
+            return redirect('/admin/home');
+        }
         req.session.flash = { success: 'User deleted successfully' };
         res.redirect('/admin/home');
     } catch (err) {
@@ -187,9 +169,6 @@ exports.deleteUser = async (req, res) => {
 
 //Admin User Search POST
 exports.getSearchUser = async (req, res) => {
-    if (!req.session.adminLoggedIn) {
-        return res.redirect('/admin/login');
-    }
     try {
         const query = req.body.searchTerm.trim();
         console.log(query);

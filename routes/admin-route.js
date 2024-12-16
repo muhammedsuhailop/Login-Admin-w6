@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminHomeController');
+const adminAuth = require('../middlewares/adminAuth');
 
 //Admin /
 router.get('/', adminController.loginPage);
@@ -12,7 +13,7 @@ router.get('/login', adminController.loginPage);
 router.post('/login', adminController.postAdminLogin);
 
 // Admin Home Page
-router.get('/home', adminController.getAdminHome);
+router.get('/home', adminAuth, adminController.getAdminHome);
 
 // Admin Logout
 router.post('/logout', adminController.postLogout);
@@ -22,20 +23,20 @@ router.get('/signup', adminController.getSignup);
 router.post('/signup', adminController.postSignup);
 
 //Admin User Add
-router.get('/adduser', adminController.getAddUser);
-router.post('/adduser', adminController.postAddUser);
+router.get('/adduser', adminAuth, adminController.getAddUser);
+router.post('/adduser', adminAuth, adminController.postAddUser);
 
 //Admin User View
-router.get('/viewuser/:id', adminController.getUserView);
+router.get('/viewuser/:id', adminAuth, adminController.getUserView);
 
 //Admin User Edit
-router.get('/edit-user/:id', adminController.getEditUser);
-router.put('/edit-user/:id', adminController.putEditUser);
+router.get('/edit-user/:id', adminAuth, adminController.getEditUser);
+router.put('/edit-user/:id', adminAuth, adminController.putEditUser);
 
-//Admin User 
-router.delete('/delete-user/:id', adminController.deleteUser);
+//Admin User Delete
+router.delete('/delete-user/:id', adminAuth, adminController.deleteUser);
 
 //Admin User Search
-router.post('/search-user', adminController.getSearchUser);
+router.post('/search-user', adminAuth, adminController.getSearchUser);
 
 module.exports = router;
