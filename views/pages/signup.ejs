@@ -86,7 +86,8 @@
             <label for="password" class="form-label">Create Password <span class="text-danger">*</span></label>
             <div class="input-group">
               <span class="input-group-text"><i class="fa fa-lock"></i></span>
-              <input id="password" class="form-control" placeholder="Create password" type="password" name="password" required>
+              <input id="password" class="form-control" placeholder="Create password" type="password" name="password" required onkeyup="validatePassword()">
+              <small id="passwordError"></small>
             </div>
           </div>
           <div class="mb-3">
@@ -120,6 +121,22 @@
         errorMessage.style.display = 'none';
       }
     });
+
+    function validatePassword() {
+      var password = document.getElementById("password").value;
+      var passwordError = document.getElementById("passwordError");
+      var submitButton = document.getElementById("signupButton");
+      var strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+      if (!strongPasswordRegex.test(password)) {
+        passwordError.innerHTML = "Password must be at least 6 characters long, contain uppercase and lowercase letters, numbers, and special characters.";
+        passwordError.style.color = "red";
+        submitButton.disabled = true;
+      } else {
+        passwordError.innerHTML = "";
+        submitButton.disabled = false;
+      }
+    }
   </script>
 </body>
 

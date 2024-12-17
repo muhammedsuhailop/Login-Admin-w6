@@ -19,11 +19,11 @@
 
           <div class="row">
             <div class="col-12 mb-3">
-              <label for="email" class="form-label">Email Address</label>
+              <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
               <input id="email" class="form-control" placeholder="Email address" type="email" name="email" required>
             </div>
             <div class="col-md-6 mb-3">
-              <label for="firstName" class="form-label">First Name</label>
+              <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
               <input id="firstName" class="form-control" placeholder="First name" type="text" name="firstName" required>
             </div>
             <div class="col-md-6 mb-3">
@@ -66,14 +66,15 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="password" class="form-label">Create Password</label>
+            <label for="password" class="form-label">Create Password <span class="text-danger">*</span></label>
             <div class="input-group">
               <span class="input-group-text"><i class="bi bi-key"></i></span>
-              <input id="password" class="form-control" placeholder="Create password" type="password" name="password" required>
+              <input id="password" class="form-control" placeholder="Create password" type="password" name="password" required onkeyup="validatePassword()">
+              <small id="passwordError"></small>
             </div>
           </div>
           <div class="mb-3">
-            <label for="repeatPassword" class="form-label">Repeat Password</label>
+            <label for="repeatPassword" class="form-label">Repeat Password <span class="text-danger">*</span></label>
             <div class="input-group">
               <span class="input-group-text"><i class="bi bi-key"></i></span>
               <input id="repeatPassword" class="form-control" placeholder="Repeat password" type="password" name="repeatPassword" required>
@@ -88,3 +89,20 @@
       </div>
     </div>
   </div>
+  <script>
+    function validatePassword() {
+      var password = document.getElementById("password").value;
+      var passwordError = document.getElementById("passwordError");
+      var submitButton = document.getElementById("signupButton");
+      var strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+      if (!strongPasswordRegex.test(password)) {
+        passwordError.innerHTML = "Password must be at least 6 characters long, contain uppercase and lowercase letters, numbers, and special characters.";
+        passwordError.style.color = "red";
+        submitButton.disabled = true;
+      } else {
+        passwordError.innerHTML = "";
+        submitButton.disabled = false;
+      }
+    }
+  </script>
